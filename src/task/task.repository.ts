@@ -20,6 +20,7 @@ export const TaskRepository = AppDataSource.getRepository(Task).extend({
             task.description = description;
             task.assignedPerson = assignedPerson;
             task.reminderDate = reminderDate;
+            task.emailSent=false
             await task.save()
             return task
 
@@ -28,5 +29,34 @@ export const TaskRepository = AppDataSource.getRepository(Task).extend({
             console.log(e)
 
         }
+    },
+    
+    async viewAllTasks(){
+        try{
+            const allTasks = await Task.find();
+            return {items: allTasks}
+        }catch(e){
+            console.log(e)
+        }
+    },
+
+    async getEmailSentTasks() {
+        try{
+            return {items:await Task.find({where:{emailSent:true}})}
+
+        }catch(e){
+            console.log(e)
+        }
+
+    },
+
+    async getEmailNotSentTasks() {
+        try{
+            return {items:await Task.find({where:{emailSent:false}})}
+
+        }catch(e){
+            console.log(e)
+        }
+
     }
 })

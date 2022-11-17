@@ -4,6 +4,9 @@ package task;
 
 service TaskService {
     rpc CreateTask (TaskStructure) returns (Task) {}
+    rpc ViewAllTask (NoMessage) returns (Tasks) {}
+    rpc GetEmailSentTasks (NoMessage) returns (Tasks) {}
+    rpc GetEmailNotSentTasks (NoMessage) returns (Tasks) {}
 };
 
 message TaskStructure {
@@ -22,3 +25,8 @@ message Task {
     string error = 6;
 }
 
+message NoMessage {}
+
+message Tasks {
+    repeated Task items = 1;
+}
