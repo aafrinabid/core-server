@@ -31,7 +31,7 @@ export const TaskRepository = AppDataSource.getRepository(Task).extend({
         }
     },
     
-    async viewAllTasks(){
+    async viewAllTasks() : Promise<{items:Task[]}> {
         try{
             const allTasks = await Task.find();
             return {items: allTasks}
@@ -40,7 +40,7 @@ export const TaskRepository = AppDataSource.getRepository(Task).extend({
         }
     },
 
-    async getEmailSentTasks() {
+    async getEmailSentTasks():Promise<{items:Task[]}>  {
         try{
             return {items:await Task.find({where:{emailSent:true}})}
 
@@ -50,7 +50,7 @@ export const TaskRepository = AppDataSource.getRepository(Task).extend({
 
     },
 
-    async getEmailNotSentTasks() {
+    async getEmailNotSentTasks(): Promise<{items:Task[]}> {
         try{
             return {items:await Task.find({where:{emailSent:false}})}
 
