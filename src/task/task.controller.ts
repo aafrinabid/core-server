@@ -5,10 +5,6 @@ import { EmailScheduleDto } from './emailSchedule.dto';
 import { Task } from './task.entity';
 import { TaskService } from './task.service';
 
-interface NotificationService {
-    sendMail(emailSchedule:EmailScheduleDto) : {result:string}
-}
-
 @Controller('task')
 export class TaskController {
     

@@ -13,4 +13,4 @@ export const AppDataSource= new DataSource({
 
 })
 
-AppDataSource.initialize().then(()=>console.log('database connected'))
+AppDataSource.initialize()

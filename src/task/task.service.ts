@@ -11,7 +11,7 @@ import { TaskRepository } from './task.repository';
 @Injectable()
 export class TaskService {
 
-    createTask(createTaskDto: CreateTaskDto) {
+    createTask(createTaskDto: CreateTaskDto):Promise<Task> {
         try{
 
             return TaskRepository.createTask(createTaskDto)

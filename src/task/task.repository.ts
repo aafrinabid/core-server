@@ -1,11 +1,11 @@
 import { ConflictException } from "@nestjs/common";
 import { retry } from "rxjs";
-import { AppDataSource } from "src/app-data-source";
+import { AppDataSource } from "../app-data-source";
 import { CreateTaskDto } from "./create-task.dto";
 import { Task } from "./task.entity";
 
 export const TaskRepository = AppDataSource.getRepository(Task).extend({
-    async createTask(createTaskDto: CreateTaskDto){
+    async createTask(createTaskDto: CreateTaskDto):Promise<Task>{
         try{
             const date = new Date(createTaskDto.reminderDate)
             const dateNow = new Date(Date.now())
