@@ -1,20 +1,26 @@
 import { Injectable, OnModuleInit } from '@nestjs/common';
 import { Client, ClientGrpc } from '@nestjs/microservices';
+import { InjectRepository } from '@nestjs/typeorm';
 import { Observable } from 'rxjs';
 import { CreateTaskDto } from './create-task.dto';
 import { EmailScheduleDto } from './emailSchedule.dto';
 import { Task } from './task.entity';
-import { TaskRepository } from './task.repository';
+import { TasksRepository } from './tasks.repository';
 
 
 
 @Injectable()
 export class TaskService {
 
-    createTask(createTaskDto: CreateTaskDto):Promise<Task> {
+    constructor(
+        @InjectRepository(TasksRepository)
+        private readonly tasksRepository: TasksRepository
+    ){}
+
+   async createTask(createTaskDto: CreateTaskDto):Promise<Task> {
         try{
 
-            return TaskRepository.createTask(createTaskDto)
+            return await this.tasksRepository.CreateTask(createTaskDto)
         }catch(e){
             console.log(e)
                 }
@@ -22,7 +28,7 @@ export class TaskService {
 
    async viewAllTask():Promise<{items:Task[]}> {
         try{
-            return await TaskRepository.viewAllTasks()
+            return this.tasksRepository.ViewAllTasks()
 
         }catch(e){
             console.log(e)
@@ -31,8 +37,7 @@ export class TaskService {
 
     async getEmailSentTasks():Promise<{items:Task[]}> {
         try{
-            return await TaskRepository.getEmailSentTasks()
-
+               return await this.tasksRepository.GetEmailSentTasks()
         }catch(e){
             console.log(e)
         }
@@ -40,7 +45,7 @@ export class TaskService {
 
     async getEmailNotSentTasks():Promise<{items:Task[]}> {
         try{
-            return await TaskRepository.getEmailNotSentTasks()
+            return await this.tasksRepository.GetEmailNotSentTasks()
 
         }catch(e){
             console.log(e)

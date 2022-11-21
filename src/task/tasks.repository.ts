@@ -1,15 +1,14 @@
 import { ConflictException } from "@nestjs/common";
-import { retry } from "rxjs";
-import { AppDataSource } from "../app-data-source";
+import { Repository } from "typeorm";
 import { CreateTaskDto } from "./create-task.dto";
 import { Task } from "./task.entity";
 
-export const TaskRepository = AppDataSource.getRepository(Task).extend({
-    async createTask(createTaskDto: CreateTaskDto):Promise<Task>{
+export class TasksRepository extends Repository<Task> {
+    async CreateTask(createTaskDto: CreateTaskDto):Promise<Task>{
         try{
             const date = new Date(createTaskDto.reminderDate)
             const dateNow = new Date(Date.now())
-            console.log(date,dateNow)
+            console.log(date,dateNow,'inside task repository')
             if(date<dateNow) {
         throw new ConflictException('past date or time detected') 
 
@@ -29,18 +28,18 @@ export const TaskRepository = AppDataSource.getRepository(Task).extend({
             console.log(e)
 
         }
-    },
+    }
     
-    async viewAllTasks() : Promise<{items:Task[]}> {
+    async ViewAllTasks() : Promise<{items:Task[]}> {
         try{
             const allTasks = await Task.find();
             return {items: allTasks}
         }catch(e){
             console.log(e)
         }
-    },
+    }
 
-    async getEmailSentTasks():Promise<{items:Task[]}>  {
+    async GetEmailSentTasks():Promise<{items:Task[]}>  {
         try{
             return {items:await Task.find({where:{emailSent:true}})}
 
@@ -48,9 +47,9 @@ export const TaskRepository = AppDataSource.getRepository(Task).extend({
             console.log(e)
         }
 
-    },
+    }
 
-    async getEmailNotSentTasks(): Promise<{items:Task[]}> {
+    async GetEmailNotSentTasks(): Promise<{items:Task[]}> {
         try{
             return {items:await Task.find({where:{emailSent:false}})}
 
@@ -59,4 +58,4 @@ export const TaskRepository = AppDataSource.getRepository(Task).extend({
         }
 
     }
-})
+}
