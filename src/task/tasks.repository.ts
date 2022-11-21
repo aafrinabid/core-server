@@ -8,7 +8,6 @@ export class TasksRepository extends Repository<Task> {
         try{
             const date = new Date(createTaskDto.reminderDate)
             const dateNow = new Date(Date.now())
-            console.log(date,dateNow,'inside task repository')
             if(date<dateNow) {
         throw new ConflictException('past date or time detected') 
 
