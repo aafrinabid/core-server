@@ -3,10 +3,11 @@ import { CreateTaskDto } from './create-task.dto';
 import { Task } from './task.entity';
 import { TaskRepository } from './task.repository';
 import { TaskService } from './task.service';
+import { TasksRepository } from './tasks.repository';
 
 describe('TaskService', () => {
   let service: TaskService;
-  let mockRepository = TaskRepository;
+  let mockRepository: TasksRepository;
   let createTaskDto:CreateTaskDto ={
     title:'groceries',
     description:'milk',
@@ -16,10 +17,11 @@ describe('TaskService', () => {
 
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
-      providers: [TaskService],
+      providers: [TaskService, TasksRepository],
     }).compile();
 
     service = module.get<TaskService>(TaskService);
+    mockRepository = module.get<TasksRepository>(TasksRepository)
   });
 
   it('should be defined', () => {
@@ -28,26 +30,26 @@ describe('TaskService', () => {
 
   it('should create task',async () =>{
     let result : Promise<Task>
-    jest.spyOn(mockRepository,'createTask').mockImplementation(()=> result)
+    jest.spyOn(mockRepository,'CreateTask').mockImplementation(()=> result)
     expect(await service.createTask(createTaskDto)).toBe(result)
    
   })
 
   it('should fetch all tasks from repository' , async ()=>{
     let result : Promise<{items:Task[]}>
-    jest.spyOn(mockRepository,'viewAllTasks').mockImplementation(()=>result)
+    jest.spyOn(mockRepository,'ViewAllTasks').mockImplementation(()=>result)
     expect( await service.viewAllTask()).toBe(result)
   })
 
   it('should get all tasks where email reminder is sent', async ()=> {
     let result : Promise<{items:Task[]}>
-    jest.spyOn(mockRepository,'getEmailSentTasks').mockImplementation(()=>result)
+    jest.spyOn(mockRepository,'GetEmailSentTasks').mockImplementation(()=>result)
     expect(await service.getEmailSentTasks()).toBe(result)
   })
 
   it('should get all tasks where email reminder is not sent', async ()=> {
     let result : Promise<{items:Task[]}>
-    jest.spyOn(mockRepository,'getEmailNotSentTasks').mockImplementation(()=>result)
+    jest.spyOn(mockRepository,'GetEmailNotSentTasks').mockImplementation(()=>result)
     expect(await service.getEmailNotSentTasks()).toBe(result)
   })
 });
