@@ -1,7 +1,6 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { CreateTaskDto } from './create-task.dto';
 import { Task } from './task.entity';
-import { TaskRepository } from './task.repository';
 import { TaskService } from './task.service';
 import { TasksRepository } from './tasks.repository';
 
