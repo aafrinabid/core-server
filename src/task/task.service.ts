@@ -1,9 +1,6 @@
 import { Injectable, OnModuleInit } from '@nestjs/common';
-import { Client, ClientGrpc } from '@nestjs/microservices';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Observable } from 'rxjs';
 import { CreateTaskDto } from './create-task.dto';
-import { EmailScheduleDto } from './emailSchedule.dto';
 import { Task } from './task.entity';
 import { TasksRepository } from './tasks.repository';
 

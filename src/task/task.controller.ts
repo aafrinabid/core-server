@@ -1,7 +1,6 @@
 import { Controller } from '@nestjs/common';
 import { GrpcMethod } from '@nestjs/microservices';
 import { CreateTaskDto } from './create-task.dto';
-import { EmailScheduleDto } from './emailSchedule.dto';
 import { Task } from './task.entity';
 import { TaskService } from './task.service';
 
