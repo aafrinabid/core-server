@@ -15,42 +15,37 @@ export class TaskService {
     constructor(
         @InjectRepository(TasksRepository)
         private readonly tasksRepository: TasksRepository
-    ){}
+    ) { }
 
-   async createTask(createTaskDto: CreateTaskDto):Promise<Task> {
-        try{
-
+    async createTask(createTaskDto: CreateTaskDto): Promise<Task> {
+        try {
             return await this.tasksRepository.CreateTask(createTaskDto)
-        }catch(e){
+        } catch (e) {
             console.log(e)
-                }
+        }
     }
 
-   async viewAllTask():Promise<{items:Task[]}> {
-        try{
+    async viewAllTask(): Promise<{ items: Task[] }> {
+        try {
             return this.tasksRepository.ViewAllTasks()
-
-        }catch(e){
+        } catch (e) {
             console.log(e)
         }
     }
 
-    async getEmailSentTasks():Promise<{items:Task[]}> {
-        try{
-               return await this.tasksRepository.GetEmailSentTasks()
-        }catch(e){
+    async getEmailSentTasks(): Promise<{ items: Task[] }> {
+        try {
+            return await this.tasksRepository.GetEmailSentTasks()
+        } catch (e) {
             console.log(e)
         }
     }
 
-    async getEmailNotSentTasks():Promise<{items:Task[]}> {
-        try{
+    async getEmailNotSentTasks(): Promise<{ items: Task[] }> {
+        try {
             return await this.tasksRepository.GetEmailNotSentTasks()
-
-        }catch(e){
+        } catch (e) {
             console.log(e)
         }
     }
-
- 
 }

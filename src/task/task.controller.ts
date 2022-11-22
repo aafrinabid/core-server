@@ -1,4 +1,4 @@
-import { Controller} from '@nestjs/common';
+import { Controller } from '@nestjs/common';
 import { GrpcMethod } from '@nestjs/microservices';
 import { CreateTaskDto } from './create-task.dto';
 import { EmailScheduleDto } from './emailSchedule.dto';
@@ -7,36 +7,32 @@ import { TaskService } from './task.service';
 
 @Controller('task')
 export class TaskController {
-    
+
     constructor(
-        private taskService :TaskService,
-         ){}
-
-  
-
-    @GrpcMethod('TaskService') 
-    async createTask(createTaskDto : CreateTaskDto):Promise<Task>{
-    const task =await this.taskService.createTask(createTaskDto)
-    if(task){
-        return task
-    }
-
-    }
+        private taskService: TaskService,
+    ) { }
     
     @GrpcMethod('TaskService')
-    viewAllTask():Promise< {items:Task[]}>{
-    return this.taskService.viewAllTask()
+    async createTask(createTaskDto: CreateTaskDto): Promise<Task> {
+        const task = await this.taskService.createTask(createTaskDto)
+        if (task) {
+            return task
+        }
+     }
+
+    @GrpcMethod('TaskService')
+    viewAllTask(): Promise<{ items: Task[] }> {
+        return this.taskService.viewAllTask()
     }
 
     @GrpcMethod('TaskService')
-    getEmailSentTasks():Promise<{items:Task[]}> {
+    getEmailSentTasks(): Promise<{ items: Task[] }> {
         return this.taskService.getEmailSentTasks()
     }
 
     @GrpcMethod('TaskService')
-    getEmailNotSentTasks():Promise<{items:Task[]}> {
+    getEmailNotSentTasks(): Promise<{ items: Task[] }> {
         return this.taskService.getEmailNotSentTasks()
     }
-
-    }
+}
 
